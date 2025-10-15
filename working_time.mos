@@ -16,7 +16,7 @@ model ModelName
 
 
     cost, work_hours: array(worker_type) of real
-    production_hours, price: array(products) of real
+    production_hours, price, M: array(products) of real
     max_workers, startup: real
 
     ! Auxiliary mpvar variable representing the relationship between production hours and produced amount of product 2
@@ -32,7 +32,7 @@ model ModelName
 
   initialisations from "working_time.dat"
     day_names product_names cost work_hours max_workers
-    production_hours price
+    production_hours price M
   end-initialisations
 
   ! Objective function
@@ -48,11 +48,11 @@ model ModelName
 
   ! Adjustment constraint for production time of 2 based on quantity
 
-  produced(2) - 100 <= t
-  produced(2) - 100 >= 0.0001 - (1-t)
+  produced(2) - 100 <= M(2)*t
+  produced(2) - 100 >= 0.0001 - M(2)*(1-t)
 
-  ph_2 >= sum(p in products)production_hours(p) + produced(2) - 100 - (1-t)
-  ph_2 <= sum(p in products)production_hours(p) + produced(2) - 100 + (1-t)
+  ph_2 >= sum(p in products)production_hours(p) + produced(2) - 100 - M(2)*(1-t)
+  ph_2 <= sum(p in products)production_hours(p) + produced(2) - 100 + M(2)*(1-t)
 
   maximise(total_profit)
 
