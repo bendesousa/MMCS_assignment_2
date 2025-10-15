@@ -1,0 +1,57 @@
+model ModelName
+
+  uses "mmxprs"
+
+  declarations
+    number_of_days = 7
+    number_of_products = 7
+    number_of_worker_types = 2
+    days = 1..number_of_days
+    products = 1..number_of_products
+    worker_type = 1..number_of_worker_types
+    
+    
+    day_names: array(days) of string
+    product_names: array(products) of string
+    
+    
+    cost, work_hours: array(worker_type) of real
+    production_hours, price: array(products) of real
+    max_workers, startup: real
+    
+    produced: array(products) of mpvar
+    workers_starting: array (days, worker_type) of mpvar
+    t, u, v: mpvar
+  end-declarations
+  
+  initialisations from "working_time.dat"
+    day_names product_names cost work_hours max_workers
+    production_hours price
+  end-initialisations
+  
+  ! Objective function
+  total_profit := sum(p in products)produced(p)*price(p) - sum(d in days, w in worker_type)workers_starting(d,w)*cost(w) - startup*t
+
+  writeln("Begin running model")
+  ! Constraints
+  
+  ! Creating binary constraints
+  t is_binary
+  u is_binary
+  v is_binary
+  
+  ! Adjustment constraint for production time of 2 based on quantity
+  
+  if(getsol(produced(2)) > 100)then
+    production_hours = sum(p in products)(getsol(production_hours(p))) + getsol(produced(2)) - 100
+  elif(getsol(produced(2)) < 100)then
+    production_hours = production_hours
+  end-if
+  
+  
+  maximise(total_profit)
+  
+  writeln(getobjval)
+  
+  writeln("End running model")
+end-model
