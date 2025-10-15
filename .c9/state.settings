@@ -6,7 +6,8 @@
         "json()": {
             "meta": {
                 "accessList": [
-                    "tab3"
+                    "tab3",
+                    "tab5"
                 ]
             },
             "name": "pane1",
@@ -34,6 +35,37 @@
                                 "runner": "Mosel",
                                 "debug": false,
                                 "command": "wokring_time.mos",
+                                "toolbar": true,
+                                "name": ""
+                            }
+                        }
+                    },
+                    "editorType": "output",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab5",
+                    "path": "",
+                    "className": [
+                        "tab5"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1760563332644
+                        },
+                        "filter": true,
+                        "title": "working_time.mos - Stopped",
+                        "tooltip": "working_time.mos - Stopped",
+                        "output": {
+                            "id": "output4780817",
+                            "width": 0,
+                            "height": 0,
+                            "config": {
+                                "runner": "Mosel",
+                                "debug": false,
+                                "command": "working_time.mos",
                                 "toolbar": true
                             }
                         }
@@ -53,7 +85,7 @@
             "@acestatus": 1,
             "@base-step-wizard": 2,
             "@divider": 4,
-            "@document": 4,
+            "@document": 6,
             "@editorswitch": 1,
             "@fico.vdl.attributes-panel": 1,
             "@fico.vdl.palette-panel": 1,
@@ -61,9 +93,9 @@
             "@menu": 3,
             "@menuitem": 8,
             "@pane": 2,
-            "@session": 4,
-            "@tab": 4,
-            "@undoManager": 4,
+            "@session": 6,
+            "@tab": 6,
+            "@undoManager": 6,
             "@welcome": 1
         }
     },
@@ -94,12 +126,12 @@
     },
     "panecycle": {
         "json()": [
-            "tab1",
-            "tab3"
+            "tab4",
+            "tab5"
         ]
     },
     "panels": {
-        "@active-left": "none",
+        "@active-left": "tree",
         "@active-right": "none",
         "commands.panel": {
             "@enabled": "false",
@@ -149,38 +181,20 @@
             ]
         }
     },
+    "recentfiles": {
+        "json()": []
+    },
     "tabs": {
         "json()": {
-            "focus": "/wokring_time.mos",
+            "focus": "/working_time.mos",
             "meta": {
                 "accessList": [
-                    "tab1",
+                    "tab4",
                     "tab2"
                 ]
             },
             "name": "pane0",
             "nodes": [
-                {
-                    "type": "tab",
-                    "name": "tab1",
-                    "path": "/wokring_time.mos",
-                    "className": [
-                        "tab1",
-                        "focus"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1760549771764
-                        },
-                        "filter": true,
-                        "title": "wokring_time.mos",
-                        "tooltip": "/wokring_time.mos",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": true
-                },
                 {
                     "type": "tab",
                     "name": "tab2",
@@ -200,6 +214,27 @@
                     },
                     "editorType": "ace",
                     "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab4",
+                    "path": "/working_time.mos",
+                    "className": [
+                        "tab4",
+                        "focus"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1760550303695
+                        },
+                        "filter": true,
+                        "title": "working_time.mos",
+                        "tooltip": "/working_time.mos",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": true
                 }
             ],
             "skin": "editor_tab",
@@ -209,7 +244,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/working_time.dat"
+            "/working_time.mos"
         ]
     },
     "welcome": {
