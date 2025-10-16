@@ -1,6 +1,6 @@
 {
     "console": {
-        "@expanded": true,
+        "@expanded": false,
         "@height": "300",
         "@maximized": "false",
         "json()": {
@@ -62,8 +62,8 @@
                         "tooltip": "working_time.mos - Stopped",
                         "output": {
                             "id": "output4780817",
-                            "width": 1228,
-                            "height": 268,
+                            "width": 0,
+                            "height": 0,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
@@ -133,7 +133,7 @@
         ]
     },
     "panels": {
-        "@active-left": "none",
+        "@active-left": "tree",
         "@active-right": "none",
         "commands.panel": {
             "@enabled": "false",
@@ -207,7 +207,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1760608572535
+                            "timestamp": 1760619018235
                         },
                         "filter": true,
                         "title": "working_time.dat",
@@ -228,7 +228,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1760608549160
+                            "timestamp": 1760623636405
                         },
                         "filter": true,
                         "title": "working_time.mos",
