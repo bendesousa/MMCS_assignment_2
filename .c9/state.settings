@@ -1,6 +1,6 @@
 {
     "console": {
-        "@expanded": false,
+        "@expanded": true,
         "@height": "300",
         "@maximized": "false",
         "json()": {
@@ -20,10 +20,6 @@
                         "tab3"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1760548638639
-                        },
                         "filter": true,
                         "title": "wokring_time.mos - Stopped",
                         "tooltip": "wokring_time.mos - Stopped",
@@ -31,6 +27,7 @@
                             "id": "output363540",
                             "width": 0,
                             "height": 0,
+                            "scrollTop": -1,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
@@ -38,7 +35,12 @@
                                 "toolbar": true,
                                 "name": ""
                             }
-                        }
+                        },
+                        "hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                        "meta": {
+                            "timestamp": 1760548638639
+                        },
+                        "changed": false
                     },
                     "editorType": "output",
                     "active": false
@@ -60,8 +62,8 @@
                         "tooltip": "working_time.mos - Stopped",
                         "output": {
                             "id": "output4780817",
-                            "width": 0,
-                            "height": 0,
+                            "width": 1228,
+                            "height": 268,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
@@ -85,7 +87,7 @@
             "@acestatus": 1,
             "@base-step-wizard": 2,
             "@divider": 4,
-            "@document": 6,
+            "@document": 4,
             "@editorswitch": 1,
             "@fico.vdl.attributes-panel": 1,
             "@fico.vdl.palette-panel": 1,
@@ -93,9 +95,9 @@
             "@menu": 3,
             "@menuitem": 8,
             "@pane": 2,
-            "@session": 6,
+            "@session": 4,
             "@tab": 6,
-            "@undoManager": 6,
+            "@undoManager": 4,
             "@welcome": 1
         }
     },
@@ -131,7 +133,7 @@
         ]
     },
     "panels": {
-        "@active-left": "tree",
+        "@active-left": "none",
         "@active-right": "none",
         "commands.panel": {
             "@enabled": "false",
@@ -205,7 +207,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1760565234744
+                            "timestamp": 1760608572535
                         },
                         "filter": true,
                         "title": "working_time.dat",
@@ -226,7 +228,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1760565065586
+                            "timestamp": 1760608549160
                         },
                         "filter": true,
                         "title": "working_time.mos",

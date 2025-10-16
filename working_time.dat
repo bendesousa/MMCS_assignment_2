@@ -3,7 +3,7 @@ day_names: ["Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunda
 product_names: ["1" "2" "3" "4" "5" "6" "7"]
 production_hours: [1.0 2.0 2.7 2.4 4.5 0.7 9.5]
 price: [100 420 350 490 550 100 1115]
-startup: 2000
+startup_cost: [0 0 0 0 0 0 2000]
 M: [4000 2000 1481 1666 888 5714 421]
 
 max_workers: 500
