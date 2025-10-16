@@ -1,0 +1,89 @@
+model ModelName
+
+  uses "mmxprs"
+
+  declarations
+    number_of_days = 7
+    number_of_products = 7
+    number_of_worker_types = 2
+    days = 1..number_of_days
+    products = 1..number_of_products
+    worker_type = 1..number_of_worker_types
+
+
+    day_names: array(days) of string
+    product_names: array(products) of string
+
+
+    cost, work_hours: array(worker_type) of real
+    production_hours, price, M, startup_cost: array(products) of real
+    max_workers: real
+
+    ! Auxiliary mpvar variable representing the relationship between production hours and produced amount of product 2
+    corrected_production_hours: mpvar
+
+    ! Model generated arrays
+    produced: array(products,days) of mpvar
+    workers_starting: array (days, worker_type) of mpvar
+
+    ! Auxiliary binary variables
+    startup: array(products, days) of mpvar
+    t, two_over_hundred: array(days) of mpvar
+    ! v: mpvar
+  end-declarations
+
+  initialisations from "working_time.dat"
+    day_names product_names cost work_hours max_workers
+    production_hours price M startup_cost
+  end-initialisations
+
+  ! Objective function                                          !!!!!!!!!!!!!!CORRECTION HERE!!!!!!!!!!!!!!!!!
+  total_profit := sum(p in products,d in days)produced(p,d)*price(p) - 7*sum(d in 1..5, w in worker_type)workers_starting(d,w)*cost(w) - sum(p in products, d in days)startup_cost(p)*startup(p,d)
+
+  writeln("Begin running model")
+  ! Constraints
+
+  ! Assigning types to variables
+  forall(d in days)
+    t(d) is_binary
+  forall(d in days)
+    two_over_hundred(d) >= 0
+  forall(d in days, w in worker_type)
+    workers_starting(d,w) >= 0
+  forall(p in products, d in days)
+    startup(p,d) is_binary
+  forall(p in products, d in days)
+    produced(p,d) >= 0
+  ! v is_binary
+
+
+  ! Limiting number of workers to be <= 500      !!!!!!!!!!!!!!CORRECTION HERE!!!!!!!!!!!!!!!!!
+  forall(d in days)do
+    5*sum(w in worker_type)workers_starting(d,w) <= max_workers
+  end-do
+
+  ! Limiting the part time workforce hours to be <= 25% of the total    !!!!!!!!!!!!!!CORRECTION HERE!!!!!!!!!!!!!!!!!
+  0.25*(sum(d in days, w in worker_type)workers_starting(d,w)*work_hours(w)) >= sum(d in days)workers_starting(d,2)*work_hours(2)
+
+  ! Startup cost constraint
+  forall(p in products, d in days)
+    produced(p,d) <= M(p)*startup(p,d)
+
+  ! Adjustment constraint for production time of 2 based on quantity
+  forall(d in days)do
+    two_over_hundred(d) <= M(2)*t(d)
+    two_over_hundred(d) >= produced(2,d) -100
+    two_over_hundred(d) <= produced(2,d) -100 + M(2)*(1-t(d))
+  end-do
+
+  corrected_production_hours = sum(p in products, d in days)production_hours(p)*produced(p,d) + sum(d in days)two_over_hundred(d)
+
+  ! Limiting the production hours to be less than the total working hours
+  corrected_production_hours <= sum(d in days, w in worker_type)workers_starting(d,w)*work_hours(w)
+
+  maximise(total_profit)
+
+  writeln(getobjval)
+
+  writeln("End running model")
+end-model
