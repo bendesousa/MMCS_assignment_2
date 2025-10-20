@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\title{Optimizing Profit of Products and Workers
+\n MMCS Assignment 2}
+\author{Alexandros Zachakos \& Benjamin De Sousa}
+\date{}
+
+\begin{document}
+\maketitle
+\newpage
+
+\section{Contents}
+\subsection{Introduction..................................................................3}
+\subsection{Modeling Approach.......................................................3}
+\newpage
+\section{Introduction}
+This consulting report was produced on the request of Producti-Co. It aims to provide robust suggestions that would allow the client to maximise their profits over the coming time period. The primary factors being considered here are the quantity of products sold against the number of workers required to produce said products. The profit ratio can thus be optimised by maximising the first and minimising the second. 
+\\ \\
+When maximising the company's profit we also have to consider working regulations and company policy.In particular, all the workers at Producti-Co work for 5 consecutive days followed by a 2 week break which is not necessarily the weekend. During these days, attendance for both full and part-time workers is mandatory, with differences in the length of the shift and the hourly payment. Also, part-time workers should constitute no more than 25\% of the total workers, while the total number of daily workers should not exceed 500 as well.
+\\ \\
+As for the products,  Producti-Co produces 7 distinct ones, differing at the price and the time required for their production. In some cases, it is essential to consider their potential particularities depending on any additional production costs (product 7) or working hours needed (products 2,3 and 4). 
+\\ \\
+More details about the exact numbers of the aforementioned limitations can be found at the appendix at the end of this report. 
+\\ \\ 
+\section{Modeling Approach}
+In order to model the aforementioned optimization problem, for  \\
+$i\in \{1,...,7\}=\{\text{shift starting in Monday},...,\text{shift starting in Sunday}\}$
+\\
+$j\in \{1,...,7\}=\{\text{Monday},...,\text{Sunday}\}$
+\\
+$k\in \{1,2\}\ \ \ \ = \{\text{Full time worker, Part time worker}\}$
+\\
+$n\in \{1,...,7\}=\{\text{Product 1},...,\text{Product 7}\}$
+\\ \\
+the following variables were defined:
+\\ 
+$x_{ijk}=$ number of workers type $k$ having shift $i$ and working on day $j$ \\
+$p_{jn}=$ units of product $n$ produced on day $j$ (only the first 100 for product 2) \\
+$\hat{p}_{j2}=$ units of product 2 produced after the first 100 units \\
+$c_{k}=$ daily cost (salary) of a worker type $k$ \\
+$s_{n}=$ sale price of 1 unit of product $n$ \\ 
+$a=[0,0,0,0,0,0,2000]:$ where $a_{n}$ represents the start-up cost for product $n$ \\
+$y_{jn} =
+\begin{cases}
+1, & \text{if product $n$ is produced on day $j$} \\
+0, & \text{otherwise}
+\end{cases} $ \\
+\\
+Also, in order to take into account the fact that employees work for 5 consecutive days and then take a mandatory 2-day break, we construct the following matrix, where the rows and columns demonstrate the shifts of each worker and the days of the week respectively. It's elements indicate 1 when an employee with shift pattern $i$ is supposed to work on day $j$, and 0 otherwise: \\
+$$A=\left[ \begin{array}{ccccccc}
+1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+0 & 1 & 1 & 1 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 1 & 1 & 1 & 1 \\
+1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+1 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 1 & 1 & 1 & 0 & 0 & 1
+\end{array}\right]$$ 
+Hence, in order to maximize the revenue we have the following objective \\ function: \\
+$$max \ \sum_{j=1}^{7}\left( \sum_{n=1}^{7}p_{jn}s_{n}+\hat{p}_{j2}s_{2}\right)-\sum_{k=1}^{2}\sum_{i=1}^{7}\sum_{j=1}^{7}A(i,j)c_{k}x_{ijk}-\sum_{j=1}^{7}\sum_{n=1}^{7}a_{n}y_{jn}$$
+
+\end{document}
