@@ -1,16 +1,82 @@
 {
     "console": {
         "@expanded": true,
-        "@height": 288,
+        "@height": "300",
         "@maximized": "false",
         "json()": {
             "meta": {
                 "accessList": [
+                    "tab3",
+                    "tab5",
                     "tab1"
                 ]
             },
             "name": "pane1",
             "nodes": [
+                {
+                    "type": "tab",
+                    "name": "tab3",
+                    "path": "",
+                    "className": [
+                        "tab3"
+                    ],
+                    "document": {
+                        "filter": true,
+                        "title": "wokring_time.mos - Stopped",
+                        "tooltip": "wokring_time.mos - Stopped",
+                        "output": {
+                            "id": "output363540",
+                            "width": 0,
+                            "height": 0,
+                            "scrollTop": -1,
+                            "config": {
+                                "runner": "Mosel",
+                                "debug": false,
+                                "command": "wokring_time.mos",
+                                "toolbar": true,
+                                "name": ""
+                            }
+                        },
+                        "hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                        "meta": {
+                            "timestamp": 1760548638639
+                        },
+                        "changed": false
+                    },
+                    "editorType": "output",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab5",
+                    "path": "",
+                    "className": [
+                        "tab5"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1760563332644
+                        },
+                        "filter": true,
+                        "title": "working_time.mos - Stopped",
+                        "tooltip": "working_time.mos - Stopped",
+                        "output": {
+                            "id": "output4780817",
+                            "width": 1048,
+                            "height": 268,
+                            "config": {
+                                "runner": "Mosel",
+                                "debug": false,
+                                "command": "working_time.mos",
+                                "toolbar": true,
+                                "name": ""
+                            }
+                        }
+                    },
+                    "editorType": "output",
+                    "active": true
+                },
                 {
                     "type": "tab",
                     "name": "tab1",
@@ -21,25 +87,26 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761039101508
+                            "timestamp": 1760690521786
                         },
                         "filter": true,
                         "title": "Assignment2.mos - Stopped",
                         "tooltip": "Assignment2.mos - Stopped",
                         "output": {
-                            "id": "output175590",
+                            "id": "output451100",
                             "width": 1048,
-                            "height": 256,
+                            "height": 268,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
                                 "command": "Assignment2.mos",
-                                "toolbar": true
+                                "toolbar": true,
+                                "name": ""
                             }
                         }
                     },
                     "editorType": "output",
-                    "active": true
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -53,7 +120,7 @@
             "@acestatus": 1,
             "@base-step-wizard": 2,
             "@divider": 4,
-            "@document": 7,
+            "@document": 6,
             "@editorswitch": 1,
             "@fico.vdl.attributes-panel": 1,
             "@fico.vdl.palette-panel": 1,
@@ -61,9 +128,9 @@
             "@menu": 3,
             "@menuitem": 8,
             "@pane": 2,
-            "@session": 7,
+            "@session": 6,
             "@tab": 2,
-            "@undoManager": 7,
+            "@undoManager": 6,
             "@welcome": 1
         }
     },
@@ -77,10 +144,10 @@
     "local": {
         "window": {
             "@fullscreen": false,
-            "@maximized": false,
-            "@minimized": true,
-            "@position": "-7:0",
-            "@size": "589:642"
+            "@maximized": true,
+            "@minimized": false,
+            "@position": "-8:-8",
+            "@size": "634:658"
         }
     },
     "menus": {
@@ -94,8 +161,8 @@
     },
     "panecycle": {
         "json()": [
-            "tab0",
-            "tab1"
+            "tab2",
+            "tab5"
         ]
     },
     "panels": {
@@ -154,11 +221,12 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/Assignment2.mos",
+            "focus": "/working_time.dat",
             "meta": {
                 "accessList": [
+                    "tab2",
                     "tab0",
-                    "tab2"
+                    "tab4"
                 ]
             },
             "name": "pane0",
@@ -168,16 +236,37 @@
                     "name": "tab2",
                     "path": "/working_time.dat",
                     "className": [
-                        "tab2"
+                        "tab2",
+                        "focus"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761046185535
+                            "timestamp": 1760708408902
                         },
                         "filter": true,
                         "title": "working_time.dat",
                         "tooltip": "/working_time.dat",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": true
+                },
+                {
+                    "type": "tab",
+                    "name": "tab4",
+                    "path": "/working_time.mos",
+                    "className": [
+                        "tab4"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1760708426418
+                        },
+                        "filter": true,
+                        "title": "working_time.mos",
+                        "tooltip": "/working_time.mos",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -188,13 +277,12 @@
                     "name": "tab0",
                     "path": "/Assignment2.mos",
                     "className": [
-                        "tab0",
-                        "focus"
+                        "tab0"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761046149292
+                            "timestamp": 1760706418992
                         },
                         "filter": true,
                         "title": "Assignment2.mos",
@@ -202,7 +290,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -212,7 +300,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/Assignment2.mos"
+            "/working_time.mos"
         ]
     },
     "welcome": {
