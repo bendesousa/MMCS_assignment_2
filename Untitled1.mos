@@ -1,0 +1,176 @@
+model ModelName
+
+  uses "mmxprs"
+
+  declarations
+    number_of_shifts = 7
+    number_of_days = 7
+    number_of_products = 7
+    number_of_worker_types = 2
+    days = 1..number_of_days
+    products = 1..number_of_products
+    worker_type = 1..number_of_worker_types
+    shifts = 1..number_of_shifts
+
+
+    day_names: array(days) of string
+    product_names: array(products) of string
+
+
+    cost, work_hours, productivity: array(worker_type) of real           !!!!!!!!!!!!!!!!!!!!!EXTENSION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    production_hours, price, M, startup_cost: array(products) of real
+    max_workers: real
+
+    ! Auxiliary mpvar variable representing the relationship between production hours and produced amount of product 2
+    ! corrected_production_hours: mpvar
+
+    ! Model generated arrays
+    produced: array(days, products) of mpvar
+    workers: array (shifts, days, worker_type) of mpvar
+
+    ! Auxiliary binary variables
+    startup: array(days, products) of mpvar
+    t, two_over_hundred, prod3and4: array(days) of mpvar
+
+    ! Matrix A of working days
+    I=1..number_of_shifts
+    J=1..number_of_days
+    A: array(I,J) of real
+  end-declarations
+
+  initialisations from "working_time.dat"
+    day_names product_names cost work_hours max_workers
+    production_hours price M startup_cost A
+    productivity !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!EXTENSION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  end-initialisations
+
+  ! Objective function
+  total_profit := sum(d in days)(two_over_hundred(d)*price(2)+sum(p in products)produced(d,p)*price(p)) - sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*A(s,d)*cost(w) - sum(d in days, p in products)startup_cost(p)*startup(d,p)
+
+  writeln("Begin running model")
+  ! Constraints
+  forall(s in shifts, d in days, w in worker_type)do
+    if (A(s,d)>=1) then
+      workers(s,s,w)=workers(s,d,w)
+    end-if
+    if (A(s,d)<=0) then
+      workers(s,d,w)=0
+    end-if
+  end-do
+
+
+  ! Assigning types to variables
+  forall(d in days)do
+    t(d) is_binary
+    two_over_hundred(d) >= 0
+    two_over_hundred(d) is_integer
+    produced(d,2)<=100
+    prod3and4(d) is_binary
+  end-do
+  forall(s in shifts, d in days, w in worker_type)do
+    workers(s,d,w) is_integer
+    workers(s,d,w) >= 0
+  end-do
+  forall(p in products, d in days)do
+    startup(d,p) is_binary
+    produced(d,p) >= 0
+    produced(d,p) is_integer
+  end-do
+
+  ! Limiting number of workers to be <= 500
+  forall(d in days) do
+    sum(s in shifts, w in worker_type)workers(s,d,w)*A(s,d) <= max_workers
+  end-do
+
+  ! Limiting the part time workforce hours to be <= 25% of the total
+  0.25*(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)*A(s,d)) >= sum(s in shifts, d in days) workers(s,d,2)*work_hours(2)*A(s,d)
+
+  ! Startup cost constraint
+  forall(p in products, d in days)do
+    produced(d,p) <= M(p)*startup(d,p)
+    produced(d,p) >= startup(d,p)
+  end-do
+
+  ! Adjustment constraint for production time of 2 based on quantity
+  forall(d in days)do
+    two_over_hundred(d) <= (M(2)-100)*t(d)
+    produced(d,2)-99<=t(d)
+    100*t(d) <= produced(d,2)
+    prod3and4(d)<=startup(d,3)
+    prod3and4(d)<=startup(d,4)
+    prod3and4(d)>=startup(d,3)+startup(d,4)-1
+  end-do
+
+ ! Limiting the production hours to be less than the total working hours
+forall(d in days) do
+  3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*A(s,d)
+end-do
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!EXTENSIONS STARTING HERE!!!
+!for the hourly -2% productivity drop
+forall(d in days) do
+3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
+end-do
+forall(p in products, d in days)do
+    produced(d,p) <= M(p)*productivity(1)*startup(d,p)
+end-do
+forall(d in days)do
+    two_over_hundred(d) <= (M(2)*productivity(1)-100)*t(d)
+end-do
+
+!for the production limit (we said to do an array here, wasnt sure how to do it, as we would also need an array of maximums of the objective function, plus the percentage cant fall under (100/7)%
+!for some reason it doesn't work, don't know why, by changing parameters, either workerswork without producing all the products they could, or the model runs for a very long time
+forall(p in products) do
+  sum(d in days)(production_hours(p)*produced(d,p)+3*two_over_hundred(d)+75*prod3and4(d)) <= (0.3)* sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
+end-do
+
+  maximise(total_profit)
+
+writeln
+
+writeln("Total profit: ",getobjval)
+
+writeln
+
+forall(d in days)do
+  writeln("Total number of Full-Time workers in ", day_names(d),": ", sum(s in shifts)getsol(workers(s,d,1)*A(s,d)))
+  writeln("Total number of Part-Time workers in ", day_names(d),": ", sum(s in shifts)getsol(workers(s,d,2)*A(s,d)))
+end-do
+
+writeln
+
+forall(d in days) do
+  writeln("Work hours in ", day_names(d),"= ", sum(s in shifts, w in worker_type) getsol(workers(s,d,w))*work_hours(w)*A(s,d))
+  writeln("Production hours in ", day_names(d),"= ", getsol(two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p)))
+end-do
+
+writeln
+
+writeln("Total work hours: ", getsol(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*A(s,d)*work_hours(w)))
+writeln("Total production hours: ", sum(d in days)getsol(sum(p in products)production_hours(p)*produced(d,p) + two_over_hundred(d)+75*prod3and4(d)))
+
+writeln
+
+forall(d in days, p in products)do
+  writeln("We made ", getsol(produced(d,p)), " units of product ",p," in ",day_names(d))
+end-do
+
+writeln
+
+forall(p in products)do
+  writeln("We made ", sum(d in days)getsol(produced(d,p)), " units of product ",p," in total")
+end-do
+
+writeln
+
+forall(d in days) do
+  writeln("Extra units of product 2 in ",day_names(d),": ",getsol(two_over_hundred(d)))
+end-do
+
+writeln
+
+writeln("Total units of product 2 produced: ", sum(d in days)(getsol(two_over_hundred(d))+getsol(produced(d,2))))
+
+writeln("End running model")
+end-model
