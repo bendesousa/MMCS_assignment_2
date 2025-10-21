@@ -63,7 +63,7 @@ $M=[4000,1366,1481,1666,888,5714,421]:$ where $M_{n}$ is the maximum number of u
 \\
 The values of $M_{n}$ were calculated by using this formula:
 $$ M_{n} = \left\lfloor \frac{\text{Maximum total working hours in a day}}{\text{Total hours for the production of 1 unit of product } n}\right\rfloor=$$
-$$=\left\lfloor\frac{\text{(Maximum daily number of full time workers)$*$(hourly payment of full time worker)}}{\text{Total hours for the production of 1 unit of product } n}\right\rfloor=$$
+$$=\left\lfloor\frac{\text{(Maximum daily number of full time workers)$*$(Working hours of full time worker)}}{\text{Total hours for the production of 1 unit of product } n}\right\rfloor=$$
 $$=\left\lfloor\frac{500*8}{h_{n}}\right\rfloor=\left\lfloor\frac{4000}{h_{n}}\right\rfloor$$
 for all $n$, except of product 2, which was calculated from:\\
 $100*2+3(M_{2}-100)=8*500$ \\ \\
