@@ -1,18 +1,17 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{amsmath}
-\title{Optimizing Profit of Products and Workers
+\title{Optimizing Revenue from Products and Workers
 \n MMCS Assignment 2}
 \author{Alexandros Zachakos \& Benjamin De Sousa}
 \date{}
 
 \begin{document}
 \maketitle
-\newpage
 
 \section{Contents}
-\subsection{Introduction..................................................................3}
-\subsection{Modeling Approach.......................................................3}
+\subsection{Introduction..................................................................2}
+\subsection{Modeling Approach.......................................................2}
 \newpage
 \section{Introduction}
 This consulting report was produced on the request of Producti-Co. It aims to provide robust suggestions that would allow the client to maximise their profits over the coming time period. The primary factors being considered here are the quantity of products sold against the number of workers required to produce said products. The profit ratio can thus be optimised by maximising the first and minimising the second. 
@@ -22,7 +21,7 @@ When maximising the company's profit we also have to consider working regulation
 As for the products,  Producti-Co produces 7 distinct ones, differing at the price and the time required for their production. In some cases, it is essential to consider their potential particularities depending on any additional production costs (product 7) or working hours needed (products 2,3 and 4). 
 \\ \\
 More details about the exact numbers of the aforementioned limitations can be found at the appendix at the end of this report. 
-\\ \\ 
+\\ 
 \section{Modeling Approach}
 In order to model the aforementioned optimization problem, for  \\
 $i\in \{1,...,7\}=\{\text{shift starting in Monday},...,\text{shift starting in Sunday}\}$
@@ -38,15 +37,36 @@ the following variables were defined:
 $x_{ijk}=$ number of workers type $k$ having shift $i$ and working on day $j$ \\
 $p_{jn}=$ units of product $n$ produced on day $j$ (only the first 100 for product 2) \\
 $\hat{p}_{j2}=$ units of product 2 produced after the first 100 units \\
-$c_{k}=$ daily cost (salary) of a worker type $k$ \\
-$s_{n}=$ sale price of 1 unit of product $n$ \\ 
-$a=[0,0,0,0,0,0,2000]:$ where $a_{n}$ represents the start-up cost for product $n$ \\
 $y_{jn} =
 \begin{cases}
 1, & \text{if product $n$ is produced on day $j$} \\
 0, & \text{otherwise}
 \end{cases} $ \\
+$z_{j} =
+\begin{cases}
+1, & \text{if we produce more than 100 units of product 2 on day $j$} \\
+0, & \text{otherwise}
+\end{cases} $ \\
+$v_{j} =
+\begin{cases}
+1, & \text{if we produce both product 3 and 4 on day $j$} \\
+0, & \text{otherwise}
+\end{cases} $ \\
 \\
+as well as the following parameters: \\
+$c_{k}=$ daily cost (salary) of a worker type $k$ \\
+$s_{n}=$ sale price of 1 unit of product $n$ \\ 
+$h_{n}=$ production hours required for product $n$ (the initial value for product 2)\\
+$a=[0,0,0,0,0,0,2000]:$ where $a_{n}$ represents the start-up cost for product $n$ \\
+$b=[8,6]: $ where $b_{k}$ is the number of the working hours of worker type $k$ \\
+$M=[4000,1366,1481,1666,888,5714,421]:$ where $M_{n}$ is the maximum number of units of product $n$ that we can make in a day. \\
+\\
+The values of $M_{n}$ were calculated by using this formula:
+$$ M_{n} = \left\lfloor \frac{\text{Maximum total working hours in a day}}{\text{Total hours for the production of 1 unit of product } n}\right\rfloor=$$
+$$=\left\lfloor\frac{\text{(Maximum daily number of full time workers)$*$(Working hours of full time worker)}}{\text{Total hours for the production of 1 unit of product } n}\right\rfloor=$$
+$$=\left\lfloor\frac{500*8}{h_{n}}\right\rfloor=\left\lfloor\frac{4000}{h_{n}}\right\rfloor$$
+for all $n$, except of product 2, which was calculated from:\\
+$100*2+3(M_{2}-100)=8*500$ \\ \\
 Also, in order to take into account the fact that employees work for 5 consecutive days and then take a mandatory 2-day break, we construct the following matrix, where the rows and columns demonstrate the shifts of each worker and the days of the week respectively. It's elements indicate 1 when an employee with shift pattern $i$ is supposed to work on day $j$, and 0 otherwise: \\
 $$A=\left[ \begin{array}{ccccccc}
 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
@@ -59,5 +79,23 @@ $$A=\left[ \begin{array}{ccccccc}
 \end{array}\right]$$ 
 Hence, in order to maximize the revenue we have the following objective \\ function: \\
 $$max \ \sum_{j=1}^{7}\left( \sum_{n=1}^{7}p_{jn}s_{n}+\hat{p}_{j2}s_{2}\right)-\sum_{k=1}^{2}\sum_{i=1}^{7}\sum_{j=1}^{7}A(i,j)c_{k}x_{ijk}-\sum_{j=1}^{7}\sum_{n=1}^{7}a_{n}y_{jn}$$
-
+Starting with the constraints, in order to ensure that people work for 5 consecutive days followed by a 2 day break, we have that:
+$$x_{ijk}=\begin{cases}
+x_{iik}, & \text{if $A(i,j)=1$} \\
+0, & \text{if $A(i,j)=0$}
+\end{cases} \ \ \ \ \ \ (1)$$
+Obviously, neither the number of workers nor the units of products can be negative, so:
+$$x_{ijk}, \ p_{jn}, \ \hat{p}_{j2} \geq 0 \ \ \ \ \ \ \ (2)$$
+In addition, from the definitions of the variables $y_{jn}$ and $z_{j}$, we get that:
+$$y_{jn}\leq p_{jn} \leq M_{n} y_{jn} \ \ \ \ \ (3)$$
+for all products except of the 2nd one, for which: 
+$$100z_j \leq p_{j2}\leq 99+z_j \ \ \ \ (4) \ \ \text{ and } \ \  \hat{p}_{j2}\leq(M_2-100)z_j \ \ \ \ (5)$$
+It is also worth noting that $v_j$ is dependent of $y_{j3}$ and $y_{j4}$, a relation which can be linearly described as:
+$$v_j \leq y_{j3}, \ v_j \leq y_{j4} \ \ \text{and} \ \ v_j \geq y_{j3}+y_{j4}-1 \ \ \ \ (6)$$
+Moreover, Producti-Co has stated that no more than 500 workers should be on duty every day, hence:
+$$\sum_{i=1}^{7}\sum_{j=1}^{7}\sum_{k=1}^{2}A(i,j)x_{ijk} \leq 500 \ \ \ \ (7)$$
+and out of these workers, the working hours of the part time ones should \\ constitute at most 25\% of the total working hours in the week:
+$$0.25\sum_{i=1}^{7}\sum_{j=1}^{7}\sum_{k=1}^{2}A(i,j)x_{ijk}b_k \geq \sum_{i=1}^{7}\sum_{j=1}^{7}A(i,j)x_{ij2}b_2 \ \ \ \ (8)$$
+Lastly, to make the model work, we need to consider that in order to make the products, employees should work the adequate hours for them, so the total daily work hours should be more than the daily hours required for the production, which gives us the last constraint of the problem:
+$$\hat{p}_{j2}+75v_j+\sum_{n=1}^{7}p_{jn}h_n \leq \sum_{i=1}^{7}\sum_{k=1}^{2}A(i,j)x_{ijk}b_k \ \ \ \ (9)$$
 \end{document}
