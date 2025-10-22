@@ -16,9 +16,7 @@
                     "name": "tab1",
                     "path": "",
                     "className": [
-                        "tab1",
-                        "focus",
-                        "running"
+                        "tab1"
                     ],
                     "document": {
                         "changed": false,
@@ -26,11 +24,11 @@
                             "timestamp": 1761039101508
                         },
                         "filter": true,
-                        "title": "Assignment2.mos - Running",
-                        "tooltip": "Assignment2.mos - Running",
+                        "title": "Assignment2.mos - Stopped",
+                        "tooltip": "Assignment2.mos - Stopped",
                         "output": {
                             "id": "output175590",
-                            "width": 1228,
+                            "width": 1868,
                             "height": 310,
                             "config": {
                                 "runner": "Mosel",
@@ -38,35 +36,6 @@
                                 "command": "Assignment2.mos",
                                 "toolbar": true,
                                 "name": ""
-                            },
-                            "running": {
-                                "pid": -154,
-                                "name": "output175590",
-                                "running": 2,
-                                "runner": [
-                                    {
-                                        "caption": "Mosel",
-                                        "cmd": [
-                                            "C:\\xpressmp\\workbench\\.c9\\node.exe",
-                                            "C:\\xpressmp\\workbench\\.c9\\node_modules\\mosel-runner\\bin\\mosel-runner",
-                                            "run",
-                                            "${debug?--debug=6167}",
-                                            "--basedir",
-                                            "$project_path",
-                                            "$file",
-                                            "--stack-trace=20",
-                                            "$args"
-                                        ],
-                                        "cmdCleanup": [
-                                            "true"
-                                        ],
-                                        "debugger": "mosel",
-                                        "debugport": 6167,
-                                        "selector": "\\.mos$",
-                                        "$builtin": true
-                                    }
-                                ],
-                                "debug": false
                             }
                         }
                     },
@@ -85,7 +54,7 @@
             "@acestatus": 1,
             "@base-step-wizard": 2,
             "@divider": 4,
-            "@document": 8,
+            "@document": 6,
             "@editorswitch": 1,
             "@fico.vdl.attributes-panel": 1,
             "@fico.vdl.palette-panel": 1,
@@ -93,9 +62,9 @@
             "@menu": 3,
             "@menuitem": 8,
             "@pane": 2,
-            "@session": 8,
-            "@tab": 4,
-            "@undoManager": 8,
+            "@session": 6,
+            "@tab": 6,
+            "@undoManager": 6,
             "@welcome": 1
         }
     },
@@ -111,8 +80,8 @@
             "@fullscreen": false,
             "@maximized": true,
             "@minimized": false,
-            "@position": "-7:0",
-            "@size": "632:649"
+            "@position": "-1927:0",
+            "@size": "958:1004"
         }
     },
     "menus": {
@@ -126,8 +95,8 @@
     },
     "panecycle": {
         "json()": [
-            "tab1",
-            "tab0"
+            "tab0",
+            "tab1"
         ]
     },
     "panels": {
@@ -182,35 +151,17 @@
         }
     },
     "recentfiles": {
-        "json()": [
-            {
-                "type": "tab",
-                "name": "tab4",
-                "path": "/working_time.mos",
-                "className": [
-                    "tab4"
-                ],
-                "document": {
-                    "changed": false,
-                    "meta": {
-                        "timestamp": 1760879948000
-                    },
-                    "filter": true,
-                    "title": "working_time.mos",
-                    "tooltip": "/working_time.mos",
-                    "ace": {}
-                },
-                "editorType": "ace",
-                "active": false
-            }
-        ]
+        "json()": []
     },
     "tabs": {
         "json()": {
-            "focus": "tab1",
+            "focus": "/Assignment2.mos",
             "meta": {
                 "accessList": [
                     "tab0",
+                    "tab5",
+                    "tab4",
+                    "tab3",
                     "tab2"
                 ]
             },
@@ -224,14 +175,39 @@
                         "tab2"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1761046185535
-                        },
                         "filter": true,
                         "title": "working_time.dat",
                         "tooltip": "/working_time.dat",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 8,
+                                    "column": 37
+                                },
+                                "end": {
+                                    "row": 8,
+                                    "column": 37
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 58,
+                                "mode": "ace/mode/text"
+                            }
+                        },
+                        "hash": "2774ea2d3ba309079bfe5699a7913c508bf864d8",
+                        "meta": {
+                            "timestamp": 1761046185000
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -241,12 +217,13 @@
                     "name": "tab0",
                     "path": "/Assignment2.mos",
                     "className": [
-                        "tab0"
+                        "tab0",
+                        "focus"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761089935482
+                            "timestamp": 1761142835000
                         },
                         "filter": true,
                         "title": "Assignment2.mos",
@@ -255,6 +232,66 @@
                     },
                     "editorType": "ace",
                     "active": true
+                },
+                {
+                    "type": "tab",
+                    "name": "tab3",
+                    "path": "/working_time.mos",
+                    "className": [
+                        "tab3"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1760879948028
+                        },
+                        "filter": true,
+                        "title": "working_time.mos",
+                        "tooltip": "/working_time.mos",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab4",
+                    "path": "/Untitled1.mos",
+                    "className": [
+                        "tab4"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1761162849000
+                        },
+                        "filter": true,
+                        "title": "Untitled1.mos",
+                        "tooltip": "/Untitled1.mos",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab5",
+                    "path": "/Latex code",
+                    "className": [
+                        "tab5"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1761162849000
+                        },
+                        "filter": true,
+                        "title": "Latex code",
+                        "tooltip": "/Latex code",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -264,7 +301,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/Assignment2.mos"
+            "/Latex code"
         ]
     },
     "welcome": {

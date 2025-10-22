@@ -135,6 +135,12 @@ end-do
 
 writeln
 
+forall(d in days)do
+  writeln("The percentage of the labour hours made up of ", type_names(2), " workers on ", day_names(d), " is: ", strfmt(( getsol(sum(s in shifts) workers(s,d,2)*work_hours(2)) /getsol(sum(s in shifts, w in worker_type) workers(s,d,w)*work_hours(w)) * 100 ),0,2), "%")
+end-do
+
+writeln
+
 writeln("Comparison of labour hours to production hours:")
 forall(d in days) do
   writeln("Work hours on ", day_names(d),"= ", sum(s in shifts, w in worker_type) getsol(workers(s,d,w))*work_hours(w))
@@ -148,9 +154,13 @@ writeln("Labour Data Totals:")
 forall(w in worker_type)do
   writeln("The total number of ", type_names(w), " workers through the week is: ", sum(s in shifts, d in days)getsol(workers(s,d,w)))
 end-do
-forall(d in days)do
-  writeln("The percentage of the total labour hours made up of ", type_names(2), " workers is: ", ((sum(s in shifts, w in worker_type)getsol(workers(s,d,2))*work_hours(2))/(sum(s in shifts, w in worker_type)getsol(workers(s,d,w))*work_hours(w))*100))
-end-do
+
+writeln
+
+writeln("The total percentage of the labour hours made up of ", type_names(2), " workers is: ", strfmt(( getsol(sum(s in shifts, d in days) workers(s,d,2)*work_hours(2)) /getsol(sum(s in shifts, d in days, w in worker_type) workers(s,d,w)*work_hours(w)) * 100 ),0,2), "%")
+
+writeln
+
 writeln("Total work hours: ", getsol(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)))
 writeln("Total production hours: ", sum(d in days)getsol(sum(p in products)production_hours(p)*produced(d,p) + two_over_hundred(d)+75*prod3and4(d)))
 
@@ -190,12 +200,12 @@ end-do
 writeln
 
 forall(d in days)do
-  writeln("The total number of products produced on ", day_names(d), " was : ", sum(p in products)getsol(produced(d,p)))
+  writeln("The total units of products produced on ", day_names(d), " was : ", sum(p in products)getsol(produced(d,p)))
 end-do
 
 writeln
 
-writeln("The total production volume over the week was: ", sum(d in days, p in products)getsol(produced(d,p)))
+writeln("The total production volume over the week was: ", sum(d in days, p in products)getsol(produced(d,p)), " units")
 
 writeln
 writeln
