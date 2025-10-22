@@ -1,12 +1,13 @@
 {
     "console": {
-        "@expanded": true,
-        "@height": 342,
+        "@expanded": false,
+        "@height": 579,
         "@maximized": "false",
         "json()": {
             "meta": {
                 "accessList": [
-                    "tab1"
+                    "tab1",
+                    "tab6"
                 ]
             },
             "name": "pane1",
@@ -28,8 +29,8 @@
                         "tooltip": "Assignment2.mos - Stopped",
                         "output": {
                             "id": "output175590",
-                            "width": 1868,
-                            "height": 310,
+                            "width": 0,
+                            "height": 0,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
@@ -41,6 +42,37 @@
                     },
                     "editorType": "output",
                     "active": true
+                },
+                {
+                    "type": "tab",
+                    "name": "tab6",
+                    "path": "",
+                    "className": [
+                        "tab6"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1761169731822
+                        },
+                        "filter": true,
+                        "title": "Untitled1.mos - Stopped",
+                        "tooltip": "Untitled1.mos - Stopped",
+                        "output": {
+                            "id": "output4615136",
+                            "width": 0,
+                            "height": 0,
+                            "config": {
+                                "runner": "Mosel",
+                                "debug": false,
+                                "command": "Untitled1.mos",
+                                "toolbar": true,
+                                "name": ""
+                            }
+                        }
+                    },
+                    "editorType": "output",
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -54,7 +86,7 @@
             "@acestatus": 1,
             "@base-step-wizard": 2,
             "@divider": 4,
-            "@document": 6,
+            "@document": 7,
             "@editorswitch": 1,
             "@fico.vdl.attributes-panel": 1,
             "@fico.vdl.palette-panel": 1,
@@ -62,9 +94,9 @@
             "@menu": 3,
             "@menuitem": 8,
             "@pane": 2,
-            "@session": 6,
-            "@tab": 6,
-            "@undoManager": 6,
+            "@session": 7,
+            "@tab": 7,
+            "@undoManager": 7,
             "@welcome": 1
         }
     },
@@ -78,8 +110,8 @@
     "local": {
         "window": {
             "@fullscreen": false,
-            "@maximized": true,
-            "@minimized": false,
+            "@maximized": false,
+            "@minimized": true,
             "@position": "-1927:0",
             "@size": "958:1004"
         }
@@ -159,10 +191,10 @@
             "meta": {
                 "accessList": [
                     "tab0",
-                    "tab5",
                     "tab4",
+                    "tab2",
                     "tab3",
-                    "tab2"
+                    "tab5"
                 ]
             },
             "name": "pane0",
@@ -175,39 +207,14 @@
                         "tab2"
                     ],
                     "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1761170202912
+                        },
                         "filter": true,
                         "title": "working_time.dat",
                         "tooltip": "/working_time.dat",
-                        "ace": {
-                            "folds": [],
-                            "scrolltop": 0,
-                            "scrollleft": 0,
-                            "selection": {
-                                "start": {
-                                    "row": 8,
-                                    "column": 37
-                                },
-                                "end": {
-                                    "row": 8,
-                                    "column": 37
-                                },
-                                "isBackwards": false
-                            },
-                            "options": {
-                                "guessTabSize": true,
-                                "useWrapMode": false,
-                                "wrapToView": true
-                            },
-                            "firstLineState": {
-                                "row": 58,
-                                "mode": "ace/mode/text"
-                            }
-                        },
-                        "hash": "2774ea2d3ba309079bfe5699a7913c508bf864d8",
-                        "meta": {
-                            "timestamp": 1761046185000
-                        },
-                        "changed": false
+                        "ace": {}
                     },
                     "editorType": "ace",
                     "active": false
@@ -223,7 +230,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761142835000
+                            "timestamp": 1761174721048
                         },
                         "filter": true,
                         "title": "Assignment2.mos",

@@ -28,7 +28,7 @@ declarations
   produced: array(days, products) of mpvar
   workers: array (shifts, days, worker_type) of mpvar
 
-  production_hours_cts: array(days) of linctr
+  max_workers_cts: array(days) of linctr
   worker_ratio_cts: linctr
 
   ! Auxiliary binary variables
@@ -84,7 +84,7 @@ end-do
 
 ! Limiting number of workers to be <= 500
 forall(d in days) do
-  sum(s in shifts, w in worker_type)workers(s,d,w)<= max_workers
+  max_workers_cts(d) := sum(s in shifts, w in worker_type)workers(s,d,w)<= max_workers
 end-do
 
 ! Limiting the part time workforce hours to be <= 25% of the total
@@ -112,7 +112,7 @@ end-do
 
 ! Limiting the production hours to be less than the total working hours
 forall(d in days) do
-  production_hours_cts(d) := 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
+  3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
 end-do
 
 ! Maximising the profit
@@ -208,7 +208,13 @@ writeln
 writeln("The total production volume over the week was: ", sum(d in days, p in products)getsol(produced(d,p)), " units")
 
 writeln
+
+writeln("The total revenue for the week was: £", getsol(sum(d in days)(two_over_hundred(d)*price(2)+sum(p in products)produced(d,p)*price(p))))
+writeln("The total labour cost for the week was : £", getsol(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*cost(w) - sum(d in days, p in products)startup_cost(p)*startup(d,p)))
+
 writeln
+writeln
+
 
 ! Printing objective function result
 writeln("Result of the objective function:")
@@ -232,12 +238,12 @@ if getprobstat = 2 then
 end-if
 
 forall(d in days)do
-  if(getslack(production_hours_cts(d)) <0.0001)then
-	  writeln("Dual for ", day_names(d), " is ", strfmt(getdual(production_hours_cts(d)),0,0))
+  if(getslack(max_workers_cts(d)) <0.0001)then
+	  writeln("Dual for ", day_names(d), " is ", strfmt(getdual(max_workers_cts(d)),0,0))
 	  ! Lower bound
-	  a := getrange(XPRS_LOACT, production_hours_cts(d))
+	  a := getrange(XPRS_LOACT, max_workers_cts(d))
 	  ! Upper bound
-	  b := getrange(XPRS_UPACT, production_hours_cts(d))
+	  b := getrange(XPRS_UPACT, max_workers_cts(d))
 	  writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
   end-if
 end-do
