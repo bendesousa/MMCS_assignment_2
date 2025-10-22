@@ -1,8 +1,10 @@
-model ModelName
-
+model Assignment_2
 uses "mmxprs"
 
+! Model constructed by Benjamin de Sousa & Alexandros Zachakos
+
 declarations
+  ! Defining the size of the arrays to be generated
   number_of_shifts = 7
   number_of_days = 7
   number_of_products = 7
@@ -12,7 +14,7 @@ declarations
   worker_type = 1..number_of_worker_types
   shifts = 1..number_of_shifts
 
-
+  ! Arrays intialised from the data file
   day_names: array(days) of string
   product_names: array(products) of string
   type_names: array(worker_type) of string
@@ -22,12 +24,12 @@ declarations
   production_hours, price, M, startup_cost: array(products) of real
   max_workers: real
 
-  ! Auxiliary mpvar variable representing the relationship between production hours and produced amount of product 2
-  ! corrected_production_hours: mpvar
-
   ! Model generated arrays
   produced: array(days, products) of mpvar
   workers: array (shifts, days, worker_type) of mpvar
+
+  production_hours_cts: array(days) of linctr
+  worker_ratio_cts: linctr
 
   ! Auxiliary binary variables
   startup: array(days, products) of mpvar
@@ -45,18 +47,18 @@ initialisations from "working_time.dat"
 end-initialisations
 
 ! Objective function
-total_profit := sum(d in days)(two_over_hundred(d)*price(2)+sum(p in products)produced(d,p)*price(p)) - sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*A(s,d)*cost(w) - sum(d in days, p in products)startup_cost(p)*startup(d,p)
+total_profit := sum(d in days)(two_over_hundred(d)*price(2)+sum(p in products)produced(d,p)*price(p)) - sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*cost(w) - sum(d in days, p in products)startup_cost(p)*startup(d,p)
 
 ! Constraints
+! Assigning shift patterns to workers
 forall(s in shifts, d in days, w in worker_type)do
   if (A(s,d)>=1) then
     workers(s,s,w)=workers(s,d,w)
   end-if
-  
+
   if (A(s,d)<=0) then
     workers(s,d,w)=0
   end-if
-  
 end-do
 
 
@@ -68,7 +70,7 @@ forall(d in days)do
   produced(d,2)<=100
   prod3and4(d) is_binary
 end-do
-  
+
 forall(s in shifts, d in days, w in worker_type)do
   workers(s,d,w) is_integer
   workers(s,d,w) >= 0
@@ -82,14 +84,14 @@ end-do
 
 ! Limiting number of workers to be <= 500
 forall(d in days) do
-  sum(s in shifts, w in worker_type)workers(s,d,w)*A(s,d) <= max_workers
+  sum(s in shifts, w in worker_type)workers(s,d,w)<= max_workers
 end-do
 
 ! Limiting the part time workforce hours to be <= 25% of the total
-0.25*(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)*A(s,d)) >= sum(s in shifts, d in days) workers(s,d,2)*work_hours(2)*A(s,d)
+worker_ratio_cts:= 0.25*(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)) >= sum(s in shifts, d in days) workers(s,d,2)*work_hours(2)
 
 ! Startup cost constraint
-forall(p in products, d in days)do
+forall(d in days, p in products)do
   produced(d,p) <= M(p)*startup(d,p)
   produced(d,p) >= startup(d,p)
 end-do
@@ -99,6 +101,10 @@ forall(d in days)do
   two_over_hundred(d) <= (M(2)-100)*t(d)
   produced(d,2)-99<=t(d)
   100*t(d) <= produced(d,2)
+end-do
+
+! Adding 75 production hours if products 3 and 4 are produced together
+forall(d in days)do
   prod3and4(d)<=startup(d,3)
   prod3and4(d)<=startup(d,4)
   prod3and4(d)>=startup(d,3)+startup(d,4)-1
@@ -106,36 +112,46 @@ end-do
 
 ! Limiting the production hours to be less than the total working hours
 forall(d in days) do
-  two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*A(s,d)
+  production_hours_cts(d) := 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
 end-do
 
-maximise(total_profit)
+! Maximising the profit
+maximize(total_profit)
+
+
+
 
 writeln
 
-writeln("Worker Data:")
+! Printing the results
+writeln("Labour Data:")
 
 writeln
-
+! Printing the worker data
 writeln("Worker Type Breakdown:")
-forall(d in days)do
-  writeln("Total number of Full-Time workers on ", day_names(d),": ", sum(s in shifts)getsol(workers(s,d,1)*A(s,d)))
-  writeln("Total number of Part-Time workers on ", day_names(d),": ", sum(s in shifts)getsol(workers(s,d,2)*A(s,d)))
-  writeln
+forall(d in days, w in worker_type)do
+  writeln("Total number of ", type_names(w), " workers on ", day_names(d),": ", sum(s in shifts)getsol(workers(s,d,w)))
 end-do
 
 writeln
 
 writeln("Comparison of labour hours to production hours:")
 forall(d in days) do
-  writeln("Work hours on ", day_names(d),"= ", sum(s in shifts, w in worker_type) getsol(workers(s,d,w))*work_hours(w)*A(s,d))
+  writeln("Work hours on ", day_names(d),"= ", sum(s in shifts, w in worker_type) getsol(workers(s,d,w))*work_hours(w))
   writeln("Production hours on ", day_names(d),"= ", getsol(two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p)))
   writeln
 end-do
 
 writeln
 
-writeln("Total work hours: ", getsol(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*A(s,d)*work_hours(w)))
+writeln("Labour Data Totals:")
+forall(w in worker_type)do
+  writeln("The total number of ", type_names(w), " workers through the week is: ", sum(s in shifts, d in days)getsol(workers(s,d,w)))
+end-do
+forall(d in days)do
+  writeln("The percentage of the total labour hours made up of ", type_names(2), " workers is: ", ((sum(s in shifts, w in worker_type)getsol(workers(s,d,2))*work_hours(2))/(sum(s in shifts, w in worker_type)getsol(workers(s,d,w))*work_hours(w))*100))
+end-do
+writeln("Total work hours: ", getsol(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)))
 writeln("Total production hours: ", sum(d in days)getsol(sum(p in products)production_hours(p)*produced(d,p) + two_over_hundred(d)+75*prod3and4(d)))
 
 writeln
@@ -144,7 +160,7 @@ writeln
 writeln("Production Data:")
 
 writeln
-
+! Printing the production data
 writeln("Production volumes on each day:")
 forall(d in days, p in products)do
   if(getsol(produced(d,p)) > 0)then
@@ -169,13 +185,62 @@ forall(p in products)do
   end-if
 
   writeln("Total units of product ", p, ": ", total)
-
 end-do
 
 writeln
+
+forall(d in days)do
+  writeln("The total number of products produced on ", day_names(d), " was : ", sum(p in products)getsol(produced(d,p)))
+end-do
+
 writeln
 
+writeln("The total production volume over the week was: ", sum(d in days, p in products)getsol(produced(d,p)))
+
+writeln
+writeln
+
+! Printing objective function result
+writeln("Result of the objective function:")
 writeln("Total profit: £",getobjval)
 
+
+writeln
+writeln
+
+
+! Sensitivity analysis
+writeln("Sensitivity Analysis:")
+writeln
+
+writeln("Solver status code: ", getprobstat)
+! LP Relaxation if solution is not optimal
+if getprobstat = 2 then
+  writeln("Solution was feasible but not optimal. Performing an LP relaxation to allow for sensitivity analysis")
+  fixmipentities
+  maximize(total_profit)
+end-if
+
+forall(d in days)do
+  if(getslack(production_hours_cts(d)) <0.0001)then
+	  writeln("Dual for ", day_names(d), " is ", strfmt(getdual(production_hours_cts(d)),0,0))
+	  ! Lower bound
+	  a := getrange(XPRS_LOACT, production_hours_cts(d))
+	  ! Upper bound
+	  b := getrange(XPRS_UPACT, production_hours_cts(d))
+	  writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
+  end-if
+end-do
+
+writeln
+
+if(getslack(worker_ratio_cts) <0.0001)then
+	 writeln("Dual for part time ratio constraint is ", getdual(worker_ratio_cts))
+	 ! Lower bound
+	 a := getrange(XPRS_LOACT, worker_ratio_cts)
+	 ! Upper bound
+	 b := getrange(XPRS_UPACT, worker_ratio_cts)
+	 writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
+end-if
 
 end-model
