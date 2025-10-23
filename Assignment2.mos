@@ -124,20 +124,20 @@ end-do
 !!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Left commented out to ensure that vanilla model results can be viewed first
 ! Limiting the number of units for each product to a set proportion of the total production
-forall(p in products)do
-  production_percentage(p) := sum(d in days)(produced(d,p)*production_hours(p)+3*two_over_hundred(d)) <= 0.25*sum(s in shifts, d in days, w in worker_type)(workers(s,d,w)*work_hours(w))
-end-do
+! forall(p in products)do
+!   production_percentage(p) := sum(d in days)(produced(d,p)*production_hours(p)+3*two_over_hundred(d)) <= 0.25*sum(s in shifts, d in days, w in worker_type)(workers(s,d,w)*work_hours(w))
+! end-do
 
 ! Modelling reduction in productivity over time
-forall(d in days) do
-3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
-end-do
-forall(p in products, d in days)do
-    produced(d,p) <= M(p)*productivity(1)*startup(d,p)
-end-do
-forall(d in days)do
-    two_over_hundred(d) <= (M(2)*productivity(1)-100)*t(d)
-end-do
+! forall(d in days) do
+! 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
+! end-do
+! forall(p in products, d in days)do
+!     produced(d,p) <= M(p)*productivity(1)*startup(d,p)
+! end-do
+! forall(d in days)do
+!     two_over_hundred(d) <= (M(2)*productivity(1)-100)*t(d)
+! end-do
 !!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ! Maximising the profit
@@ -184,7 +184,7 @@ writeln("The total percentage of the labour hours made up of ", type_names(2), "
 writeln
 
 writeln("Total work hours: ", getsol(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)))
-writeln("Total production hours: ", sum(d in days)getsol(sum(p in products)production_hours(p)*produced(d,p) + two_over_hundred(d)+75*prod3and4(d)))
+writeln("Total production hours: ", sum(d in days)getsol(sum(p in products)total_production))
 
 writeln
 writeln
@@ -289,12 +289,12 @@ writeln
 !!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! writeln("Extensions:")
 ! Printing result of introducing as product limit
-! forall(p in products)do
-!   if (sum(d in days)(getsol(produced(d,p))) > 0) then
-!     production_share := 100*(sum(d in days)(getsol(produced(d,p)) * production_hours(p)) / sum(s in shifts, dd in days, w in worker_type)(getsol(workers(s,dd,w) * work_hours(w))))
-!     writeln("The proportion of product ", product_names(p), " produced was: ", strfmt(production_share,0,2), "%" )
-!   end-if
-! end-do
+forall(p in products)do
+  if (sum(d in days)(getsol(produced(d,p))) > 0) then
+    production_share := 100*(sum(d in days)(getsol(produced(d,p)) * production_hours(p)) / sum(s in shifts, dd in days, w in worker_type)(getsol(workers(s,dd,w) * work_hours(w))))
+    writeln("The proportion of product ", product_names(p), " produced was: ", strfmt(production_share,0,3), "%" )
+  end-if
+end-do
 !!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 end-model

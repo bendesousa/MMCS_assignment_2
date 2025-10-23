@@ -1,7 +1,7 @@
 {
     "console": {
-        "@expanded": true,
-        "@height": 596,
+        "@expanded": false,
+        "@height": 380,
         "@maximized": "false",
         "json()": {
             "meta": {
@@ -17,8 +17,7 @@
                     "name": "tab1",
                     "path": "",
                     "className": [
-                        "tab1",
-                        "running"
+                        "tab1"
                     ],
                     "document": {
                         "changed": false,
@@ -26,47 +25,18 @@
                             "timestamp": 1761039101508
                         },
                         "filter": true,
-                        "title": "Assignment2.mos - Running",
-                        "tooltip": "Assignment2.mos - Running",
+                        "title": "Assignment2.mos - Stopped",
+                        "tooltip": "Assignment2.mos - Stopped",
                         "output": {
                             "id": "output175590",
-                            "width": 1048,
-                            "height": 564,
+                            "width": 0,
+                            "height": 0,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
                                 "command": "Assignment2.mos",
                                 "toolbar": true,
                                 "name": ""
-                            },
-                            "running": {
-                                "pid": -42,
-                                "name": "output175590",
-                                "running": 2,
-                                "runner": [
-                                    {
-                                        "caption": "Mosel",
-                                        "cmd": [
-                                            "C:\\xpressmp\\workbench\\.c9\\node.exe",
-                                            "C:\\xpressmp\\workbench\\.c9\\node_modules\\mosel-runner\\bin\\mosel-runner",
-                                            "run",
-                                            "${debug?--debug=6167}",
-                                            "--basedir",
-                                            "$project_path",
-                                            "$file",
-                                            "--stack-trace=20",
-                                            "$args"
-                                        ],
-                                        "cmdCleanup": [
-                                            "true"
-                                        ],
-                                        "debugger": "mosel",
-                                        "debugport": 6167,
-                                        "selector": "\\.mos$",
-                                        "$builtin": true
-                                    }
-                                ],
-                                "debug": false
                             }
                         }
                     },
@@ -90,8 +60,8 @@
                         "tooltip": "Untitled1.mos - Stopped",
                         "output": {
                             "id": "output904882",
-                            "width": 1048,
-                            "height": 564,
+                            "width": 0,
+                            "height": 0,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
@@ -238,7 +208,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761221028091
+                            "timestamp": 1761223460159
                         },
                         "filter": true,
                         "title": "working_time.dat",
@@ -259,7 +229,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761220791171
+                            "timestamp": 1761223356453
                         },
                         "filter": true,
                         "title": "Assignment2.mos",
