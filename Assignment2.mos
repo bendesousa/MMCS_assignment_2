@@ -89,11 +89,14 @@ end-do
 
 ! Limiting number of workers to be <= 500
 forall(d in days) do
-  max_workers_cts(d) := sum(s in shifts, w in worker_type)workers(s,d,w)<= max_workers
+  max_workers_cts(d) := sum(s in shifts, w in worker_type)workers(s,d,w)
+  max_workers_cts(d)<= max_workers
 end-do
 
 ! Limiting the part time workforce hours to be <= 25% of the total
-worker_ratio_cts:= 0.25*(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w)) >= sum(s in shifts, d in days) workers(s,d,2)*work_hours(2)
+total_part_time_labor_hours:=sum(s in shifts, d in days) workers(s,d,2)*work_hours(2)
+worker_ratio_cts:= 0.25*(sum(s in shifts, d in days, w in worker_type)workers(s,d,w)*work_hours(w))
+worker_ratio_cts >= total_part_time_labor_hours
 
 ! Startup cost constraint
 forall(d in days, p in products)do
@@ -118,19 +121,24 @@ end-do
 ! Limiting the production hours to be less than the total working hours
 forall(d in days) do
   total_production := 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p)
-  total_production <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
+  total_daily_labor_hours := sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
+  total_production <= total_daily_labor_hours
 end-do
 
 !!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Left commented out to ensure that vanilla model results can be viewed first
-! Limiting the number of units for each product to a set proportion of the total production
+!Left commented out to ensure that vanilla model results can be viewed first
+!Limiting the number of units for each product to a set proportion of the total production
 ! forall(p in products)do
-!   production_percentage(p) := sum(d in days)(produced(d,p)*production_hours(p)+3*two_over_hundred(d)) <= 0.25*sum(s in shifts, d in days, w in worker_type)(workers(s,d,w)*work_hours(w))
+!   total_labour_hours := sum(s in shifts, d in days, w in worker_type)(workers(s,d,w)*work_hours(w))
+!   production_percentage(p) := sum(d in days)(produced(d,p)*production_hours(p)+3*two_over_hundred(d)) 
+!   production_percentage(p)<= 0.25*total_labour_hours
 ! end-do
 
-! Modelling reduction in productivity over time
+! !Modelling reduction in productivity over time
 ! forall(d in days) do
-! 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
+! total_daily_prod_hours := 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) 
+! reduced_productivity_labor_hours := sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
+! total_daily_prod_hours <= reduced_productivity_labor_hours
 ! end-do
 ! forall(p in products, d in days)do
 !     produced(d,p) <= M(p)*productivity(1)*startup(d,p)
