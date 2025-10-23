@@ -1,0 +1,109 @@
+Worker Type Breakdown:
+Total number of Full-Time workers on Monday: 295   
+Total number of Part-Time workers on Monday: 205   
+Total number of Full-Time workers on Tuesday: 286  
+Total number of Part-Time workers on Tuesday: 214  
+Total number of Full-Time workers on Wednesday: 386
+Total number of Part-Time workers on Wednesday: 114
+Total number of Full-Time workers on Thursday: 485 
+Total number of Part-Time workers on Thursday: 15  
+Total number of Full-Time workers on Friday: 389   
+Total number of Part-Time workers on Friday: 111   
+Total number of Full-Time workers on Saturday: 289
+Total number of Part-Time workers on Saturday: 211
+Total number of Full-Time workers on Sunday: 295
+Total number of Part-Time workers on Sunday: 205
+
+The percentage of the labour hours made up of Part-Time workers on Monday is: 34.26%
+The percentage of the labour hours made up of Part-Time workers on Tuesday is: 35.95%
+The percentage of the labour hours made up of Part-Time workers on Wednesday is: 18.13%
+The percentage of the labour hours made up of Part-Time workers on Thursday is: 2.27%
+The percentage of the labour hours made up of Part-Time workers on Friday is: 17.63%
+The percentage of the labour hours made up of Part-Time workers on Saturday is: 35.38%
+The percentage of the labour hours made up of Part-Time workers on Sunday is: 34.26%
+
+Comparison of labour hours to production hours:
+Work hours on Monday= 3590
+Production hours on Monday= 3363.2
+
+Work hours on Tuesday= 3572
+Production hours on Tuesday= 3363.2
+
+Work hours on Wednesday= 3772
+Production hours on Wednesday= 3363.2
+
+Work hours on Thursday= 3970
+Production hours on Thursday= 3363.2
+
+Work hours on Friday= 3778
+Production hours on Friday= 3363.2
+
+Work hours on Saturday= 3578
+Production hours on Saturday= 3363.2
+
+Work hours on Sunday= 3590
+Production hours on Sunday= 3363.2
+
+
+Labour Data Totals:
+The total number of Full-Time workers through the week is: 2425
+The total number of Part-Time workers through the week is: 1075
+
+The total percentage of the labour hours made up of Part-Time workers is: 24.95%
+
+Total work hours: 25850
+Total production hours: 24169.1
+
+
+Production Data:
+
+Production volumes on each day:
+Units of product 2 units of product produced on Monday: 100
+Units of product 4 units of product produced on Monday: 1318
+Units of product 2 units of product produced on Tuesday: 97
+Units of product 4 units of product produced on Tuesday: 1314
+Units of product 2 units of product produced on Wednesday: 100
+Units of product 4 units of product produced on Wednesday: 1384
+Units of product 2 units of product produced on Thursday: 97
+Units of product 4 units of product produced on Thursday: 1458
+Units of product 6 units of product produced on Thursday: 1
+Units of product 2 units of product produced on Friday: 99
+Units of product 4 units of product produced on Friday: 1387
+Units of product 2 units of product produced on Saturday: 96
+Units of product 4 units of product produced on Saturday: 1317
+Units of product 2 units of product produced on Sunday: 100
+Units of product 4 units of product produced on Sunday: 1318
+
+Units of product 2 produced on Monday with increased production hours: 0
+Units of product 2 produced on Tuesday with increased production hours: 0
+Units of product 2 produced on Wednesday with increased production hours: 0
+Units of product 2 produced on Thursday with increased production hours: 0
+Units of product 2 produced on Friday with increased production hours: 0
+Units of product 2 produced on Saturday with increased production hours: 0
+Units of product 2 produced on Sunday with increased production hours: 0
+
+Production Totals:
+Total units of product 1: 0
+Total units of product 2: 689
+Total units of product 3: 0
+Total units of product 4: 9496
+Total units of product 5: 0
+Total units of product 6: 1
+Total units of product 7: 0
+
+The total units of products produced on Monday was : 1418
+The total units of products produced on Tuesday was : 1411
+The total units of products produced on Wednesday was : 1484
+The total units of products produced on Thursday was : 1556
+The total units of products produced on Friday was : 1486
+The total units of products produced on Saturday was : 1413
+The total units of products produced on Sunday was : 1418
+
+The total production volume over the week was: 10186 units
+
+The total revenue for the week was: £4942520
+The total labour cost for the week was : £1777750
+
+
+Result of the objective function:
+Total profit: £3164770
