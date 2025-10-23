@@ -28,22 +28,27 @@ declarations
   produced: array(days, products) of mpvar
   workers: array (shifts, days, worker_type) of mpvar
 
+
   max_workers_cts: array(days) of linctr
   worker_ratio_cts: linctr
 
   ! Auxiliary binary variables
   startup: array(days, products) of mpvar
   t, two_over_hundred, prod3and4: array(days) of mpvar
-
   ! Matrix A of working days
   I=1..number_of_shifts
   J=1..number_of_days
   A: array(I,J) of real
+
+  ! Extension declarations
+  production_percentage: array(products) of linctr
+  productivity: array(worker_type) of real
 end-declarations
 
 initialisations from "working_time.dat"
   day_names product_names cost work_hours max_workers
   production_hours price M startup_cost A type_names
+  productivity
 end-initialisations
 
 ! Objective function
@@ -112,14 +117,31 @@ end-do
 
 ! Limiting the production hours to be less than the total working hours
 forall(d in days) do
-  3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
+  total_production := 3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p)
+  total_production <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)
 end-do
+
+!!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Left commented out to ensure that vanilla model results can be viewed first
+! Limiting the number of units for each product to a set proportion of the total production
+forall(p in products)do
+  production_percentage(p) := sum(d in days)(produced(d,p)*production_hours(p)+3*two_over_hundred(d)) <= 0.25*sum(s in shifts, d in days, w in worker_type)(workers(s,d,w)*work_hours(w))
+end-do
+
+! Modelling reduction in productivity over time
+forall(d in days) do
+3*two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p) <= sum(s in shifts, w in worker_type)workers(s,d,w)*work_hours(w)*productivity(w)
+end-do
+forall(p in products, d in days)do
+    produced(d,p) <= M(p)*productivity(1)*startup(d,p)
+end-do
+forall(d in days)do
+    two_over_hundred(d) <= (M(2)*productivity(1)-100)*t(d)
+end-do
+!!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ! Maximising the profit
 maximize(total_profit)
-
-
-
 
 writeln
 
@@ -144,7 +166,7 @@ writeln
 writeln("Comparison of labour hours to production hours:")
 forall(d in days) do
   writeln("Work hours on ", day_names(d),"= ", sum(s in shifts, w in worker_type) getsol(workers(s,d,w))*work_hours(w))
-  writeln("Production hours on ", day_names(d),"= ", getsol(two_over_hundred(d)+75*prod3and4(d)+sum(p in products)production_hours(p)*produced(d,p)))
+  writeln("Production hours on ", day_names(d),"= ", getsol(total_production))
   writeln
 end-do
 
@@ -225,38 +247,54 @@ writeln
 writeln
 
 
-! Sensitivity analysis
-writeln("Sensitivity Analysis:")
+!!!!!!!!!!!!!!!!!!!!!!!Sensitivity Analysis!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Unfortunately does not produce any meaningul results but left in for verification
+! writeln("Sensitivity Analysis:")
+! writeln
+
+! writeln("Solver status code: ", getprobstat)
+! ! LP Relaxation if solution is not optimal
+! if getprobstat = 2 then
+!   writeln("Solution was feasible but not optimal. Performing an LP relaxation to allow for sensitivity analysis")
+!   fixmipentities
+!   maximize(total_profit)
+! end-if
+! ! Testing the limit on maximum number of workers
+! forall(d in days)do
+!   if(getslack(max_workers_cts(d)) <0.0001)then
+! 	  writeln("Dual for ", day_names(d), " is ", strfmt(getdual(max_workers_cts(d)),0,0))
+! 	  ! Lower bound
+! 	  a := getrange(XPRS_LOACT, max_workers_cts(d))
+! 	  ! Upper bound
+! 	  b := getrange(XPRS_UPACT, max_workers_cts(d))
+! 	  writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
+!   end-if
+! end-do
+
+! writeln
+! ! Testing the part time worker ratio
+! if(getslack(worker_ratio_cts) <0.0001)then
+! 	 writeln("Dual for part time ratio constraint is ", getdual(worker_ratio_cts))
+! 	 ! Lower bound
+! 	 a := getrange(XPRS_LOACT, worker_ratio_cts)
+! 	 ! Upper bound
+! 	 b := getrange(XPRS_UPACT, worker_ratio_cts)
+! 	 writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
+! end-if
+!!!!!!!!!!!!!!!!!!!!!!!Sensitivity Analysis!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+writeln
 writeln
 
-writeln("Solver status code: ", getprobstat)
-! LP Relaxation if solution is not optimal
-if getprobstat = 2 then
-  writeln("Solution was feasible but not optimal. Performing an LP relaxation to allow for sensitivity analysis")
-  fixmipentities
-  maximize(total_profit)
-end-if
-
-forall(d in days)do
-  if(getslack(max_workers_cts(d)) <0.0001)then
-	  writeln("Dual for ", day_names(d), " is ", strfmt(getdual(max_workers_cts(d)),0,0))
-	  ! Lower bound
-	  a := getrange(XPRS_LOACT, max_workers_cts(d))
-	  ! Upper bound
-	  b := getrange(XPRS_UPACT, max_workers_cts(d))
-	  writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
-  end-if
-end-do
-
-writeln
-
-if(getslack(worker_ratio_cts) <0.0001)then
-	 writeln("Dual for part time ratio constraint is ", getdual(worker_ratio_cts))
-	 ! Lower bound
-	 a := getrange(XPRS_LOACT, worker_ratio_cts)
-	 ! Upper bound
-	 b := getrange(XPRS_UPACT, worker_ratio_cts)
-	 writeln("Constraint range ", " is ", "[", a, ", ", b,"]")
-end-if
+!!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! writeln("Extensions:")
+! Printing result of introducing as product limit
+! forall(p in products)do
+!   if (sum(d in days)(getsol(produced(d,p))) > 0) then
+!     production_share := 100*(sum(d in days)(getsol(produced(d,p)) * production_hours(p)) / sum(s in shifts, dd in days, w in worker_type)(getsol(workers(s,dd,w) * work_hours(w))))
+!     writeln("The proportion of product ", product_names(p), " produced was: ", strfmt(production_share,0,2), "%" )
+!   end-if
+! end-do
+!!!!!!!!!!!!!!!!!!!!!!!Extension!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 end-model

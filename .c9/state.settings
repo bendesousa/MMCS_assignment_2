@@ -1,13 +1,13 @@
 {
     "console": {
         "@expanded": true,
-        "@height": 579,
+        "@height": 596,
         "@maximized": "false",
         "json()": {
             "meta": {
                 "accessList": [
                     "tab1",
-                    "tab6"
+                    "tab3"
                 ]
             },
             "name": "pane1",
@@ -17,7 +17,8 @@
                     "name": "tab1",
                     "path": "",
                     "className": [
-                        "tab1"
+                        "tab1",
+                        "running"
                     ],
                     "document": {
                         "changed": false,
@@ -25,18 +26,47 @@
                             "timestamp": 1761039101508
                         },
                         "filter": true,
-                        "title": "Assignment2.mos - Stopped",
-                        "tooltip": "Assignment2.mos - Stopped",
+                        "title": "Assignment2.mos - Running",
+                        "tooltip": "Assignment2.mos - Running",
                         "output": {
                             "id": "output175590",
-                            "width": 1868,
-                            "height": 547,
+                            "width": 1048,
+                            "height": 564,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
                                 "command": "Assignment2.mos",
                                 "toolbar": true,
                                 "name": ""
+                            },
+                            "running": {
+                                "pid": -42,
+                                "name": "output175590",
+                                "running": 2,
+                                "runner": [
+                                    {
+                                        "caption": "Mosel",
+                                        "cmd": [
+                                            "C:\\xpressmp\\workbench\\.c9\\node.exe",
+                                            "C:\\xpressmp\\workbench\\.c9\\node_modules\\mosel-runner\\bin\\mosel-runner",
+                                            "run",
+                                            "${debug?--debug=6167}",
+                                            "--basedir",
+                                            "$project_path",
+                                            "$file",
+                                            "--stack-trace=20",
+                                            "$args"
+                                        ],
+                                        "cmdCleanup": [
+                                            "true"
+                                        ],
+                                        "debugger": "mosel",
+                                        "debugport": 6167,
+                                        "selector": "\\.mos$",
+                                        "$builtin": true
+                                    }
+                                ],
+                                "debug": false
                             }
                         }
                     },
@@ -45,23 +75,23 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab6",
+                    "name": "tab3",
                     "path": "",
                     "className": [
-                        "tab6"
+                        "tab3"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761169731822
+                            "timestamp": 1761218420369
                         },
                         "filter": true,
                         "title": "Untitled1.mos - Stopped",
                         "tooltip": "Untitled1.mos - Stopped",
                         "output": {
-                            "id": "output4615136",
-                            "width": 1868,
-                            "height": 547,
+                            "id": "output904882",
+                            "width": 1048,
+                            "height": 564,
                             "config": {
                                 "runner": "Mosel",
                                 "debug": false,
@@ -86,7 +116,7 @@
             "@acestatus": 1,
             "@base-step-wizard": 2,
             "@divider": 4,
-            "@document": 7,
+            "@document": 6,
             "@editorswitch": 1,
             "@fico.vdl.attributes-panel": 1,
             "@fico.vdl.palette-panel": 1,
@@ -94,9 +124,9 @@
             "@menu": 3,
             "@menuitem": 8,
             "@pane": 2,
-            "@session": 7,
-            "@tab": 7,
-            "@undoManager": 7,
+            "@session": 6,
+            "@tab": 4,
+            "@undoManager": 6,
             "@welcome": 1
         }
     },
@@ -127,12 +157,12 @@
     },
     "panecycle": {
         "json()": [
-            "tab2",
+            "tab0",
             "tab1"
         ]
     },
     "panels": {
-        "@active-left": "none",
+        "@active-left": "tree",
         "@active-right": "none",
         "commands.panel": {
             "@enabled": "false",
@@ -190,10 +220,9 @@
             "focus": "/Assignment2.mos",
             "meta": {
                 "accessList": [
-                    "tab2",
                     "tab0",
+                    "tab2",
                     "tab4",
-                    "tab3",
                     "tab5"
                 ]
             },
@@ -209,7 +238,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761176216533
+                            "timestamp": 1761221028091
                         },
                         "filter": true,
                         "title": "working_time.dat",
@@ -230,7 +259,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761174903709
+                            "timestamp": 1761220791171
                         },
                         "filter": true,
                         "title": "Assignment2.mos",
@@ -242,26 +271,6 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab3",
-                    "path": "/working_time.mos",
-                    "className": [
-                        "tab3"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1760879948028
-                        },
-                        "filter": true,
-                        "title": "working_time.mos",
-                        "tooltip": "/working_time.mos",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
                     "name": "tab4",
                     "path": "/Untitled1.mos",
                     "className": [
@@ -270,7 +279,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761162849000
+                            "timestamp": 1761218553082
                         },
                         "filter": true,
                         "title": "Untitled1.mos",
@@ -285,17 +294,39 @@
                     "name": "tab5",
                     "path": "/Latex code",
                     "className": [
-                        "tab5"
+                        "tab5",
+                        "changed"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1761162849000
-                        },
+                        "changed": true,
                         "filter": true,
                         "title": "Latex code",
                         "tooltip": "/Latex code",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 840,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 0,
+                                    "column": 0
+                                },
+                                "end": {
+                                    "row": 0,
+                                    "column": 0
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": 0
+                        },
+                        "meta": {
+                            "timestamp": 1761177720000
+                        }
                     },
                     "editorType": "ace",
                     "active": false
