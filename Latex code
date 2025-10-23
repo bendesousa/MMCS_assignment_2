@@ -147,15 +147,17 @@ Lastly, to make the model work, we need to consider that in order to make the pr
 $$\sum_{n=1}^7\sum_{m=1}^7B(n,m)v_{jnm}+\sum_{n=1}^{7}(p_{jn}h_n+\hat{p}_{jn}\hat{h}_n) \leq \sum_{i=1}^{7}\sum_{k=1}^{2}x_{ijk}b_k \ \ \ \ (10)$$
 This last constraint constituted the reason of defining the matrix B to be upper triangular and not symmetrical, so that the sums don't count the same value twice. \\
 \\
-Now in case that we want to extend the model, and hypothesize that the productivity of each worker drops approximately $2\%$ every hour, then the average productivity of a full time worker would be:
+Now in case that we want to extend the model: \\ In the first extension we hypothesize that the productivity of each worker drops approximately $2\%$ every hour, then the average productivity of a full time worker would be:
 $$\frac{100\%+98\%+96\%+94\%+92\%+90\%+88\%+86\%}{8}=93\%$$ 
 of their initial one, while the respective percentage for a part time worker would be:
 $$\frac{100\%+98\%+96\%+94\%+92\%+90\%}{6}=95\%$$
 This would have adverse effects on the production, as a worker would need slightly more time in order to create each product, changing the constraints $(3),(5)\text{ and }(10)$ as follows:
-$$y_{jn}\leq p_{jn}+\hat{p}_{jn} \leq M_{n}T_1 y_{jn} \ \ \ \ \ (3/\text{extension})$$
-$$  \hat{p}_{jn}\leq(M_nT_1-g_n)z_{jn} \ \ \ \ (5/\text{extension})$$
-$$\sum_{n=1}^7\sum_{m=1}^7B(n,m)v_{jnm}+\sum_{n=1}^{7}(p_{jn}h_n+\hat{p}_{jn}\hat{h}_n) \leq \sum_{i=1}^{7}\sum_{k=1}^{2}x_{ijk}b_kT_k \ \ \ \ (10/\text{extension})$$
-where $T=[0.93, \ 0.95]$ and $T_1$, $T_2$ define the productivity of a full or a part time worker respectively.
+$$y_{jn}\leq p_{jn}+\hat{p}_{jn} \leq M_{n}T_1 y_{jn} \ \ \ \ \ (3/\text{extension 1})$$
+$$  \hat{p}_{jn}\leq(M_nT_1-g_n)z_{jn} \ \ \ \ (5/\text{extension 1})$$
+$$\sum_{n=1}^7\sum_{m=1}^7B(n,m)v_{jnm}+\sum_{n=1}^{7}(p_{jn}h_n+\hat{p}_{jn}\hat{h}_n) \leq \sum_{i=1}^{7}\sum_{k=1}^{2}x_{ijk}b_kT_k \ \ \ \ (10/\text{extension 1})$$
+where $T=[0.93, \ 0.95]$ and $T_1$, $T_2$ define the productivity of a full or a part time worker respectively. \\ \\
+For the second extension, we hypothesize that there is a production limit for the weekly  production hours of each product, which must be less or equal than $25\%$ of the total ones. This gives us the constraint:
+$$\sum_{j=1}^{7}(p_{jn}h_n+\hat{p}_{jn}\hat{h}_n)\leq 0.25\sum_{i=1}^{7}\sum_{k=1}^{2}x_{ijk}b_k \ \ \ \ (11/\text{extension 2})$$
 
 \section*{4 Analysis}
 
@@ -229,19 +231,28 @@ The two tested constraints were the daily worker limit and the maximum 25\% limi
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{profit vs max workers.png}
-    \caption{Graph 1: Relationship Between Profit and Maximum Workers}
+    \caption{Relationship Between Profit and Maximum Workers}
     \label{fig:profit_workers}
 \end{figure}
 
 Relaxing the cap on the number of workers leads to a proportional increase in profit, as expected given there is no production limit. The client should consider lifting this cap if feasible.
 
 The part-time constraint was tested by increasing the threshold in 5\% increments up to 50\%.
-
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{part time workers.png}
-    \caption{Graph 2: Effect of Variable Part-Time Worker Proportion on Profit}
-    \label{fig:profit_workers}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{parttime vs total profit.png}
+        \caption{Effect of Variable Part-Time Worker Proportion on Profit}
+        \label{fig:image1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{parttime vs cost to revenue(1).png}
+        \caption{Effect of Variable Part-Time Worker Proportion on Cost to Revenue Ratio}
+        \label{fig:image2}
+    \end{minipage}
 \end{figure}
 
 There is a clear upward trend in profit and a downward trend in cost-to-revenue ratio as the proportion of part-time work hours increases. The client should consider negotiating with the union to adjust their regulations accordingly.
