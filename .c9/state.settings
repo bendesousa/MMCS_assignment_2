@@ -6,8 +6,7 @@
         "json()": {
             "meta": {
                 "accessList": [
-                    "tab1",
-                    "tab3"
+                    "tab1"
                 ]
             },
             "name": "pane1",
@@ -42,37 +41,6 @@
                     },
                     "editorType": "output",
                     "active": true
-                },
-                {
-                    "type": "tab",
-                    "name": "tab3",
-                    "path": "",
-                    "className": [
-                        "tab3"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1761218420369
-                        },
-                        "filter": true,
-                        "title": "Untitled1.mos - Stopped",
-                        "tooltip": "Untitled1.mos - Stopped",
-                        "output": {
-                            "id": "output904882",
-                            "width": 0,
-                            "height": 0,
-                            "config": {
-                                "runner": "Mosel",
-                                "debug": false,
-                                "command": "Untitled1.mos",
-                                "toolbar": true,
-                                "name": ""
-                            }
-                        }
-                    },
-                    "editorType": "output",
-                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -208,7 +176,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761223460159
+                            "timestamp": 1761226814598
                         },
                         "filter": true,
                         "title": "working_time.dat",
@@ -229,7 +197,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1761223356453
+                            "timestamp": 1761226820062
                         },
                         "filter": true,
                         "title": "Assignment2.mos",
@@ -247,14 +215,40 @@
                         "tab4"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1761218553082
-                        },
                         "filter": true,
                         "title": "Untitled1.mos",
                         "tooltip": "/Untitled1.mos",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 1487.5000557899475,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 116,
+                                    "column": 6
+                                },
+                                "end": {
+                                    "row": 116,
+                                    "column": 6
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": {
+                                "row": 114,
+                                "state": "start",
+                                "mode": "plugins/fico.ide.language.mosel/mode/mosel"
+                            }
+                        },
+                        "hash": "03ea9645ca400fe404dfaef00d0dc1ebacd82bf6",
+                        "meta": {
+                            "timestamp": 1761218553069
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
@@ -264,11 +258,9 @@
                     "name": "tab5",
                     "path": "/Latex code",
                     "className": [
-                        "tab5",
-                        "changed"
+                        "tab5"
                     ],
                     "document": {
-                        "changed": true,
                         "filter": true,
                         "title": "Latex code",
                         "tooltip": "/Latex code",
@@ -294,8 +286,9 @@
                             },
                             "firstLineState": 0
                         },
+                        "changed": false,
                         "meta": {
-                            "timestamp": 1761177720000
+                            "timestamp": 1761224893079
                         }
                     },
                     "editorType": "ace",
